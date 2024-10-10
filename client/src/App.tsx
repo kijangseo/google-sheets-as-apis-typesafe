@@ -19,8 +19,12 @@ export default function App() {
   }
 
   async function getSheetNames() {
-    setSheetNames(await BackendService.getSheetNames());
-    document.getElementById("loadingOption")!.textContent = "Select a sheet";
+    try {
+      setSheetNames(await BackendService.getSheetNames());
+      document.getElementById('loadingOption')!.textContent = 'Select a sheet';
+    } catch (e: unknown) {
+      alert(e);
+    }
   }
 
   // Function to convert column index to Excel-like column letters
