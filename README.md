@@ -51,5 +51,4 @@ If you need support or you have any questions, please join us in our [Discord ch
 
 <div align="center"> <a href="https://genezio.com/">
   <p>Built with Genezio with ❤️ </p>
-  <img alt="genezio logo" src="https://raw.githubusercontent.com/Genez-io/graphics/main/svg/powered_by_genezio.svg" height="40">
 </div>
