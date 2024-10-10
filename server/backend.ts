@@ -1,40 +1,57 @@
-import { GenezioDeploy, GenezioMethod } from "@genezio/types";
-import fetch from "node-fetch";
+import { google } from 'googleapis';
+import { GenezioDeploy } from "@genezio/types";
 
-type SuccessResponse = {
-  status: "success";
-  country: string;
-  lat: number;
-  lon: number;
-  city: string;
-};
+const SERVICE_ACCOUNT_FILE = './service-account-key.json';
+const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
+const SPREADSHEET_ID = '';
 
-type ErrorResponse = {
-  status: "fail";
-};
+// Load the service account credentials
+const auth = new google.auth.GoogleAuth({
+  keyFile: SERVICE_ACCOUNT_FILE,
+  scopes: SCOPES,
+});
+
+const sheets = google.sheets({ version: 'v4', auth });
 
 @GenezioDeploy()
 export class BackendService {
   constructor() {}
 
-  @GenezioMethod()
-  async hello(name: string): Promise<string> {
-    const ipLocation: SuccessResponse | ErrorResponse = await fetch(
-      "http://ip-api.com/json/"
-    )
-      .then((res) => res.json() as Promise<SuccessResponse>)
-      .catch(() => ({ status: "fail" }));
+  // Get the names of the sheets in the spreadsheet
+  async getSheetNames() {
+    if (!SPREADSHEET_ID) throw new Error('SPREADSHEET_ID is not set');
+    try {
+      const response = await sheets.spreadsheets.get({
+          spreadsheetId: SPREADSHEET_ID,
+      });
 
-    if (ipLocation.status === "fail") {
-      return `Hello ${name}! Failed to get the server location :(`;
+      const sheetsData = response.data.sheets;
+      if (sheetsData) {
+        const sheetNames = sheetsData.map(sheet => sheet.properties?.title);
+        return sheetNames;
+      }
+      return [];
+    } catch (err) {
+        console.error(err);
+        throw new Error('Error reading spreadsheet sheet names. Make sure the SPREADSHEET_ID is correct and that the service-account-key.json file has the right contents.');
     }
+  }
 
-    const formattedTime = new Date().toLocaleString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    });
+  // Get the tabular data from a specific sheet
+  async getSheetData(sheetName: string) {
+    try {
+        const response = await sheets.spreadsheets.values.get({
+            spreadsheetId: SPREADSHEET_ID,
+            range: sheetName,
+        });
 
-    return `Hello ${name}! This response was served from ${ipLocation.city}, ${ipLocation.country} (${ipLocation.lat}, ${ipLocation.lon}) at ${formattedTime}`;
+        const values = response.data.values;
+        if (values) {
+          return values;
+        }
+        return [];
+    } catch (err) {
+        console.error('Error retrieving sheet data:', err);
+    }
   }
 }
