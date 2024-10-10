@@ -13,33 +13,21 @@
 
 </div>
 
-# Genezio TypeSafe Getting Started
+# Exposing Google Sheets as APIs - typesafe implementation
 
-In the server/ folder, you'll find the backend services that are exposed to the client-side via the project's SDK.
+In the server/ folder, you'll find the backend services that are exposed to the client-side via the project's SDK. There are 2 functions being exposed - one that lists all the sheet names in your spreadsheet, and one that lists the contents of a given sheet.
+
 You can update the backend.ts file to add or modify functions, or create new backend services (new files in the server/ folder).
 
-In the client/ folder, you have a basic React.js app that calls the hello world function from the backend. Check the src/App.tsx file to see how the Genezio project SDK is imported and how the backend function is called.
+In the client/ folder, you have a basic React.js app that calls the backend functions. It lists the sheet names and once one is selected, lists the contents of that spreadsheet.
 
-Starting from this example, you can add backend functions that access a database for specific content, call other APIs to retrieve data, and then expose all of these in the front end via the same SDK.
+Check the src/App.tsx file to see how the Genezio project SDK is imported and how the backend functions are called.
 
 # Deploy
-:rocket: You can deploy your own version of the template to Genezio with one click:
+:rocket: You can deploy your own version of this template to Genezio with one click:
 
-[![Deploy to Genezio](https://raw.githubusercontent.com/Genez-io/graphics/main/svg/deploy-button.svg)](https://app.genez.io/start/deploy?repository=https://github.com/Genez-io/genezio-typesafe-getting-started)
+[![Deploy to Genezio](https://raw.githubusercontent.com/Genez-io/graphics/main/svg/deploy-button.svg)](https://app.genez.io/start/deploy?repository=https://github.com/Genez-io/google-sheets-as-apis-typesafe)
 
-
-## Genezio CLI Commands
-
-Genezio also provides a CLI tool that you can use to deploy your project from your machine.
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install -g genezio`  | Installs genezio globally                        |
-| `genezio login`           | Logs in to genezio                               |
-| `genezio local`           | Starts a local server                            |
-| `genezio deploy`          | Deploys a production project                     |
-| `genezio --help`          | Get help using genezio                           |
 
 ## Learn more
 
