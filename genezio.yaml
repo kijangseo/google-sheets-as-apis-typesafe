@@ -19,6 +19,7 @@ frontend:
             - npm run dev --silent
     sdk:
         language: ts
+    subdomain: green-our-louse
 name: google-sheets-as-apis-typesafe
 region: us-east-1
 yamlVersion: 2
