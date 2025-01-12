@@ -29,7 +29,7 @@ export class BackendService {
 
   // Get the names of the sheets in the spreadsheet
   async getSheetNames() {
-    if (!SPREADSHEET_ID) throw new Error('SPREADSHEET_ID is not set');
+    if (!SPREADSHEET_ID) throw new Error('Gak Ada Sheet');
     try {
       const response = await sheets.spreadsheets.get({
           spreadsheetId: SPREADSHEET_ID,
